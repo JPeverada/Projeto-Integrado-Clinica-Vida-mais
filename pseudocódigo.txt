@@ -1,0 +1,144 @@
+INÍCIO
+
+    // =====================================================
+    // ESTRUTURA DA FILA
+    // =====================================================
+
+    // A fila será representada por um vetor e dois índices
+    Estrutura Fila:
+        vetor[100]
+        inicio
+        fim
+    FimEstrutura
+
+
+    // -----------------------------------------------------
+    // Função: CriarFila
+    // -----------------------------------------------------
+    Procedimento CriarFila(REF F)
+        F.inicio ← 0
+        F.fim ← -1
+    FimProcedimento
+
+
+    // -----------------------------------------------------
+    // Função: FilaVazia
+    // -----------------------------------------------------
+    Função FilaVazia(F) Retorna lógico
+        Se F.fim < F.inicio então
+            Retorne VERDADEIRO
+        Senão
+            Retorne FALSO
+        FimSe
+    FimFunção
+
+
+    // -----------------------------------------------------
+    // Procedimento: Enfileirar
+    // -----------------------------------------------------
+    Procedimento Enfileirar(REF F, elemento)
+        F.fim ← F.fim + 1
+        F.vetor[F.fim] ← elemento
+    FimProcedimento
+
+
+    // -----------------------------------------------------
+    // Função: Desenfileirar
+    // -----------------------------------------------------
+    Função Desenfileirar(REF F) Retorna texto
+
+        Se FilaVazia(F) então
+            Retorne "ERRO: Fila vazia."
+        FimSe
+
+        elemento ← F.vetor[F.inicio]
+        F.inicio ← F.inicio + 1
+
+        Retorne elemento
+
+    FimFunção
+
+
+    // =====================================================
+    // FUNÇÕES DE NEGÓCIO DA CLÍNICA VIDA+
+    // =====================================================
+
+
+    // Procedimento para ler nome e CPF
+    Procedimento LerDadosPaciente(REF nome, REF cpf)
+
+        Escreva "Digite o nome do paciente:"
+        Leia nome
+
+        Enquanto nome = "" faça
+            Escreva "Nome inválido! Tente novamente:"
+            Leia nome
+        FimEnquanto
+
+        Escreva "Digite o CPF do paciente:"
+        Leia cpf
+
+        Enquanto cpf = "" faça
+            Escreva "CPF inválido! Tente novamente:"
+            Leia cpf
+        FimEnquanto
+
+    FimProcedimento
+
+
+    // Inserir 3 pacientes
+    Procedimento InserirPacientes(REF F)
+        Escreva "=== CADASTRO DE 3 PACIENTES ==="
+
+        Para i de 1 até 3 faça
+
+            Declarar nome, cpf
+            LerDadosPaciente(nome, cpf)
+
+            registro ← "Nome: " + nome + " | CPF: " + cpf
+            Enfileirar(F, registro)
+
+            Escreva "Paciente ", nome, " adicionado à fila."
+
+        FimPara
+    FimProcedimento
+
+
+    // Mostrar todos os pacientes restantes
+    Procedimento MostrarFila(F)
+        Escreva ""
+        Escreva "=== PACIENTES RESTANTES NA FILA ==="
+
+        Se FilaVazia(F) então
+            Escreva "Nenhum paciente aguardando."
+            Retorne
+        FimSe
+
+        posição ← 1
+        Para i de F.inicio até F.fim faça
+            Escreva posição, "º -> ", F.vetor[i]
+            posição ← posição + 1
+        FimPara
+
+    FimProcedimento
+
+
+    // -----------------------------------------------------
+    // PROGRAMA PRINCIPAL
+    // -----------------------------------------------------
+
+    Declarar Fila Pacientes
+    CriarFila(Pacientes)
+
+    InserirPacientes(Pacientes)
+
+    Escreva ""
+    Escreva "=== ATENDIMENTO DO PRIMEIRO PACIENTE ==="
+
+    atendido ← Desenfileirar(Pacientes)
+    Escreva "Paciente atendido: ", atendido
+
+    MostrarFila(Pacientes)
+
+
+FIM
